@@ -3,58 +3,79 @@
 #include "entidad.h"
 
 int main(){
-    // Basic
-    const int screenWidth = 800;
-    const int screenHeight = 450;
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+    //  Basics --------------------------
+    const int width = 800;
+    const int height = 600;
+    InitWindow(width, height, "Prueba movimiento");
     SetTargetFPS(60);
 
-    // Create Object Instance
-    Entidad Jugador1(2, 60, 40, 5.6, RED);
-    //--------------------------------------------------------------------------------------
+    Entidad Jugador1(3, 20, BLUE, 120, 120); // Inicializar Jugador
+    //  ---------------------------------
 
 
-    // Main game loop
-    while (!WindowShouldClose())
-    {
-        //  Update
-        //  Variables Movimiento
+    //  Main Loop -----------------------
+    while(!WindowShouldClose()){
+
+        //  Movimiento ------------------
+        bool movimientoDerecha = false;
+        bool movimientoArriba = false;
+        bool movimientoIzquierda = false;
+        bool movimientoAbajo = false;
         int moverX = 0;
         int moverY = 0;
-        int Velocidad = Jugador1.getVelocidad();
 
-        //  Condicional Movimiento
-        if(IsKeyDown(KEY_RIGHT)){
-            moverX = Velocidad;
+        if(IsKeyDown(KEY_RIGHT) && movimientoDerecha == false){
+            movimientoArriba = false;
+            movimientoIzquierda = false;
+            movimientoAbajo = false;
+            movimientoDerecha = true;
+            moverX += Jugador1.getVelocidad();
         }
-        else if(IsKeyDown(KEY_UP)){
-            moverY = -Velocidad;
+        if(IsKeyDown(KEY_UP) && movimientoArriba == false){
+            movimientoDerecha = false;
+            movimientoIzquierda = false;
+            movimientoAbajo = false;
+            movimientoArriba = true;
+            moverY -= Jugador1.getVelocidad();
         }
-        else if(IsKeyDown(KEY_LEFT)){
-            moverX = -Velocidad;
+        if(IsKeyDown(KEY_LEFT) && movimientoIzquierda == false){
+            movimientoDerecha = false;
+            movimientoArriba = false;
+            movimientoAbajo = false;
+            movimientoIzquierda = true;
+            moverX -= Jugador1.getVelocidad();
         }
-        else if(IsKeyDown(KEY_DOWN)){
-            moverY = Velocidad;
+        if(IsKeyDown(KEY_DOWN) && movimientoAbajo == false){
+            movimientoDerecha = false;
+            movimientoArriba = false;
+            movimientoIzquierda = false;
+            movimientoAbajo = true;
+            moverY += Jugador1.getVelocidad();
         }
 
-        //  Aplicar Movimiento
+        if(moverX != 0){
+            moverY = 0;
+        }
+        else if(moverY != 0){
+            moverX = 0;
+        }
+        else{
+            moverX = 0;
+            moverY = 0;
+        }
         Jugador1.Posicion.x += moverX;
         Jugador1.Posicion.y += moverY;
-        //----------------------------------------------------------------------------------
+        // ------------------------------
 
-
-        // Draw
+        //  Output Visual ---------------
         BeginDrawing();
-
-            ClearBackground(RAYWHITE);
+            ClearBackground(LIGHTGRAY);
             Jugador1.createPlayerOutput();
-                
         EndDrawing();
-        //----------------------------------------------------------------------------------
+        // ------------------------------
     }
+    // ----------------------------------
 
-
-    // De-Initialization
-    CloseWindow(); 
+    CloseWindow();
     return 0;
 }

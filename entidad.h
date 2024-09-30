@@ -3,27 +3,29 @@
 
 class Entidad{
     private:
-    //  Propiedades
+    //  Propiedades ---------------------
         int Velocidad;
-        double Tamano;
+        int Tamanho;
         Color aColor;
 
     public:
+    //  Propiedades ---------------------
         Vector2 Posicion;
 
-        Entidad(int velocidad, int posicionX, int posicionY, double tamano, Color bcolor){
-            // ↓ Set propiedades
+    //  Construct -----------------------
+        Entidad(int velocidad, int tamano, Color bColor, int posicionA, int posicionB){
             Velocidad = velocidad;
-            Posicion.x = posicionX; Posicion.y = posicionY;
-            Tamano = tamano;
-            aColor = bcolor;
+            Tamanho = tamano;
+            aColor = bColor;
+            Posicion.x = posicionA; Posicion.y = posicionB;
+        }
+
+    //  Funcion Output Visual
+        void createPlayerOutput(){
+            DrawCircle(Posicion.x, Posicion.y, Tamanho, aColor);
         }
 
         int getVelocidad(){
             return Velocidad;
-        }
-
-        void createPlayerOutput(){
-            DrawCircle(Posicion.x, Posicion.y, Tamano, aColor);
         }
 };
